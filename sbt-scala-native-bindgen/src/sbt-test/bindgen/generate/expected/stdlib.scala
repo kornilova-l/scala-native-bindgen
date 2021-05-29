@@ -1,11 +1,14 @@
 package org.example.app.stdlib
 
-import scala.scalanative._
+import scala.scalanative.unsigned._
 import scala.scalanative.native._
 
-@native.extern
+@extern
 object stdlib {
-  def access(path: native.CString, mode: native.CInt): native.CInt = native.extern
-  def read(fildes: native.CInt, buf: native.Ptr[Byte], nbyte: native.CInt): native.CInt = native.extern
-  def printf(format: native.CString, varArgs: native.CVararg*): native.CInt = native.extern
+  def access(path: CString, mode: CInt): CInt = extern
+  def read(fildes: CInt, buf: Ptr[Byte], nbyte: CInt): CInt = extern
+  //def printf(format: CString, varArgs: CVararg*): CInt = extern
+  def printf(format: CString, args: CVarArg*): CInt = Zone {
+    implicit z => stdio.vprintf(format, toCVarArgList(args.toSeq))
+  }
 }

@@ -89,14 +89,14 @@ class IR {
      *
      * Example:
      * @code
-     * type __int32_t = native.CInt
+     * type __int32_t = CInt
      * type __darwin_pid_t = __int32_t
      * type pid_t = __darwin_pid_t
      * @endcode
      *
      * Becomes:
      * @code
-     * type pid_t = native.CInt
+     * type pid_t = CInt
      * @endcode
      *
      */

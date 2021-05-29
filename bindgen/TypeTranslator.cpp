@@ -8,29 +8,29 @@ TypeTranslator::TypeTranslator(clang::ASTContext *ctx_, IR &ir)
 
     // Native Types
     typeMap["void"] = "Unit";
-    typeMap["bool"] = "native.CBool";
-    typeMap["_Bool"] = "native.CBool";
-    typeMap["char"] = "native.CChar";
-    typeMap["signed char"] = "native.CSignedChar";
-    typeMap["unsigned char"] = "native.CUnsignedChar";
-    typeMap["short"] = "native.CShort";
-    typeMap["unsigned short"] = "native.CUnsignedShort";
-    typeMap["int"] = "native.CInt";
-    typeMap["long int"] = "native.CLongInt";
-    typeMap["unsigned int"] = "native.CUnsignedInt";
-    typeMap["unsigned long int"] = "native.CUnsignedLongInt";
-    typeMap["long"] = "native.CLong";
-    typeMap["unsigned long"] = "native.CUnsignedLong";
-    typeMap["long long"] = "native.CLongLong";
-    typeMap["unsigned long long"] = "native.CUnsignedLongLong";
-    typeMap["size_t"] = "native.CSize";
-    typeMap["ptrdiff_t"] = "native.CPtrDiff";
-    typeMap["wchar_t"] = "native.CWideChar";
-    typeMap["char16_t"] = "native.CChar16";
-    typeMap["char32_t"] = "native.CChar32";
-    typeMap["float"] = "native.CFloat";
-    typeMap["double"] = "native.CDouble";
-    typeMap["long double"] = "native.CDouble";
+    typeMap["bool"] = "CBool";
+    typeMap["_Bool"] = "CBool";
+    typeMap["char"] = "CChar";
+    typeMap["signed char"] = "CSignedChar";
+    typeMap["unsigned char"] = "CUnsignedChar";
+    typeMap["short"] = "CShort";
+    typeMap["unsigned short"] = "CUnsignedShort";
+    typeMap["int"] = "CInt";
+    typeMap["long int"] = "CLongInt";
+    typeMap["unsigned int"] = "CUnsignedInt";
+    typeMap["unsigned long int"] = "CUnsignedLongInt";
+    typeMap["long"] = "CLong";
+    typeMap["unsigned long"] = "CUnsignedLong";
+    typeMap["long long"] = "CLongLong";
+    typeMap["unsigned long long"] = "CUnsignedLongLong";
+    typeMap["size_t"] = "CSize";
+    typeMap["ptrdiff_t"] = "CPtrDiff";
+    typeMap["wchar_t"] = "CWideChar";
+    typeMap["char16_t"] = "CChar16";
+    typeMap["char32_t"] = "CChar32";
+    typeMap["float"] = "CFloat";
+    typeMap["double"] = "CDouble";
+    typeMap["long double"] = "CDouble";
 }
 
 std::shared_ptr<Type>
@@ -73,8 +73,8 @@ TypeTranslator::translatePointer(const clang::QualType &pte) {
         // Take care of char*
         if (as->getKind() == clang::BuiltinType::Char_S ||
             as->getKind() == clang::BuiltinType::SChar) {
-            // TODO: new PointerType(new PrimitiveType("native.CChar"))
-            return std::make_shared<PrimitiveType>("native.CString");
+            // TODO: new PointerType(new PrimitiveType("CChar"))
+            return std::make_shared<PrimitiveType>("CString");
         }
     }
 

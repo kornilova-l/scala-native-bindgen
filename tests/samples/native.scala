@@ -1,13 +1,13 @@
 package org.scalanative.bindgen.samples
 
-import scala.scalanative._
-import scala.scalanative.native._
+import scala.scalanative.unsigned._
+import scala.scalanative.unsafe._
 
-@native.link("bindgentests")
-@native.extern
+@link("bindgentests")
+@extern
 object nativeLib {
-  type nativeFunc0 = native.CInt
-  @native.link("native")
-  def nativeFunc0(p0: native.CInt): Unit = native.extern
-  def nativeFunc(p0: native.CFloat): Unit = native.extern
+  type nativeFunc0 = CInt
+  @link("native")
+  def nativeFunc0(p0: CInt): Unit = extern
+  def nativeFunc(p0: CFloat): Unit = extern
 }

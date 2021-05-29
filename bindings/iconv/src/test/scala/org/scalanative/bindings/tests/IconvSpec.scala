@@ -1,13 +1,15 @@
 package org.scalanative.bindings.tests
 
-import org.scalatest.FunSpec
+import org.scalatest.funspec.AnyFunSpec
 
-class IconvSpec extends FunSpec {
+class IconvSpec extends AnyFunSpec {
   describe("iconv") {
     it("should convert back and forth between UTF-8 and ISO-8859-1") {
       //#usage-example
       import org.scalanative.bindings.iconv._
-      import scala.scalanative.native._
+      import scala.scalanative.unsafe._
+      import scala.scalanative.unsigned._
+      import scala.scalanative.libc._
       import java.nio.charset.Charset
 
       val UTF8   = Charset.forName("UTF-8")
@@ -28,7 +30,7 @@ class IconvSpec extends FunSpec {
         val translatedBufPtr = alloc[CString]
         !translatedBufPtr = translatedBuf
         val translatedBytesLeft = alloc[CSize]
-        !translatedBytesLeft = 32
+        !translatedBytesLeft = 32.toULong
 
         val translatedCode = iconv(
           encode,
@@ -48,7 +50,7 @@ class IconvSpec extends FunSpec {
         val roundtripBufPtr = alloc[CString]
         !roundtripBufPtr = roundtripBuf
         val roundtripBytesLeft = alloc[CSize]
-        !roundtripBytesLeft = 32
+        !roundtripBytesLeft = 32.toULong
 
         val roundtripCode = iconv(
           decode,

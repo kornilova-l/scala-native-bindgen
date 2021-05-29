@@ -1,20 +1,20 @@
 package org.scalanative.bindgen.samples
 
-import scala.scalanative._
-import scala.scalanative.native._
+import scala.scalanative.unsigned._
+import scala.scalanative.unsafe._
 
-@native.link("bindgentests")
-@native.extern
+@link("bindgentests")
+@extern
 object VarDefine {
-  val a: native.CInt = native.extern
-  val constInt: native.CInt = native.extern
-  val constIntPointer: native.Ptr[native.CInt] = native.extern
-  val c: native.CInt = native.extern
-  val f: native.CFloat = native.extern
+  val a: CInt = extern
+  val constInt: CInt = extern
+  val constIntPointer: Ptr[CInt] = extern
+  val c: CInt = extern
+  val f: CFloat = extern
   @name("a")
-  val A: native.CInt = native.extern
+  val A: CInt = extern
   @name("constInt")
-  val CONST_INT: native.CInt = native.extern
+  val CONST_INT: CInt = extern
   @name("constIntPointer")
-  val CONST_INT_POINTER: native.Ptr[native.CInt] = native.extern
+  val CONST_INT_POINTER: Ptr[CInt] = extern
 }

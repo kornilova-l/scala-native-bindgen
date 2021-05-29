@@ -11,6 +11,12 @@ Important to note is that all contributors must have signed the [Scala CLA].
 
 ## Developer Workflow
 
+Install the following for macOS:
+```sh
+brew tap nlohmann/json
+brew install nlohmann-json
+```
+
 Build the `scalaBindgen` tool:
 
 ```sh

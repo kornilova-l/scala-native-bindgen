@@ -1,9 +1,9 @@
 package org.scalanative.bindgen.samples
 
-import org.scalatest.FunSpec
-import scalanative.native._
+import org.scalatest.funspec.AnyFunSpec
+import scala.scalanative.unsafe._
 
-class ExternSpec extends FunSpec {
+class ExternSpec extends AnyFunSpec {
   describe("extern variable bindings") {
     it("should bind to C variable") {
       assert(Extern.forty_two == 42)

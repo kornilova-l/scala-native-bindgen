@@ -5,7 +5,7 @@
 #include <string>
 
 /**
- * For example native.CInt
+ * For example CInt
  */
 class PrimitiveType : virtual public Type {
   public:

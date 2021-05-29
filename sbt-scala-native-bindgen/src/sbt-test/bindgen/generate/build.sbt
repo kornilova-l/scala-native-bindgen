@@ -25,7 +25,7 @@ nativeBindgenCustomTarget := baseDirectory.value / "src/main/scala/org/example"
 val nativeBindgenCoreBinding =
   SettingKey[NativeBinding]("nativeBindgenCoreBinding")
 nativeBindgenCoreBinding := {
-  NativeBinding((resourceDirectory in Compile).value / "core.h")
+  NativeBinding((Compile / resourceDirectory).value / "core.h")
     .packageName("org.example.app.core")
     .link("core")
 }

@@ -1,14 +1,14 @@
 package org.scalanative.bindgen.docs
 
-import org.scalatest.FunSpec
+import org.scalatest.funspec.AnyFunSpec
 
-class GeometrySpec extends FunSpec {
+class GeometrySpec extends AnyFunSpec {
   describe("geometry") {
     it("using generated bindings") {
       //#example
       import com.example.custom.binding.Vector.Point
       import org.example.geometry.Geometry._
-      import scala.scalanative.native.Zone
+      import scala.scalanative.unsafe.Zone
 
       Zone { implicit zone =>
         val center = Point(1, 1)

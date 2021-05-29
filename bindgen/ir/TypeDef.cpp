@@ -17,7 +17,7 @@ TypeDef::getDefinition(const LocationManager &locationManager) const {
     if (type) {
         s << type->str(locationManager);
     } else {
-        s << "native.CStruct0 // incomplete type";
+        s << "CStruct0 // incomplete type";
     }
     s << "\n";
     return s.str();

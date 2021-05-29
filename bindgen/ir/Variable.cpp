@@ -7,7 +7,7 @@ Variable::Variable(const std::string &name, std::shared_ptr<const Type> type)
 std::string
 Variable::getDefinition(const LocationManager &locationManager) const {
     return "  val " + name + ": " + type->str(locationManager) +
-           " = native.extern\n";
+           " = extern\n";
 }
 
 bool Variable::hasIllegalUsageOfOpaqueType() const {

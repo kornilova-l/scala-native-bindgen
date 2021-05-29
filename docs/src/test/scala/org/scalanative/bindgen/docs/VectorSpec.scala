@@ -1,13 +1,13 @@
 package org.scalanative.bindgen.docs
 
-import org.scalatest.FunSpec
+import org.scalatest.funspec.AnyFunSpec
 
-class VectorSpec extends FunSpec {
+class VectorSpec extends AnyFunSpec {
   describe("vector") {
     it("using generated bindings") {
       //#step-1
       import org.example.vector._
-      import scala.scalanative.native.Zone
+      import scala.scalanative.unsafe.Zone
 
       Zone { implicit zone =>
         val p1 = struct_point(1, 1)

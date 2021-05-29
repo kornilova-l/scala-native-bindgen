@@ -17,7 +17,7 @@ std::string
 Function::getDefinition(const LocationManager &locationManager) const {
     std::stringstream s;
     if (scalaName != name) {
-        s << "  @native.link(\"" << name << "\")\n";
+        s << "  @link(\"" << name << "\")\n";
     }
     s << "  def " << handleReservedWords(scalaName) << "(";
     std::string sep = "";
@@ -29,9 +29,9 @@ Function::getDefinition(const LocationManager &locationManager) const {
     if (isVariadic) {
         /* the C Iso require at least one argument in a variadic function, so
          * the comma is fine */
-        s << ", " << getVarargsParameterName() << ": native.CVararg*";
+        s << ", " << getVarargsParameterName() << ": CVarArg*";
     }
-    s << "): " << retType->str(locationManager) << " = native.extern\n";
+    s << "): " << retType->str(locationManager) << " = extern\n";
     return s.str();
 }
 

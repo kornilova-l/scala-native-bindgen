@@ -30,8 +30,8 @@ import org.scalanative.bindgen.{Bindgen, BindingOptions}
  *
  *  - `nativeBindgenPath`: Path to the `scala-native-bindgen` executable.
  *  - `nativeBindings`: Settings for each binding to generate.
- *  - `target in nativeBindgen`: Output folder of the generated code.
- *  - `version in nativeBindgen`: Version of the `scala-native-bindgen`
+ *  - `nativeBindgen / target`: Output folder of the generated code.
+ *  - `nativeBindgen / version`: Version of the `scala-native-bindgen`
  *    to use when automatically downloading the executable.
  *  - `nativeBindgen`: Generate Scala Native bindings.
  *
@@ -70,12 +70,12 @@ object ScalaNativeBindgenPlugin extends AutoPlugin {
       nativeBindgenScopedSettings(Test) ++
       Def.settings(
         ivyConfigurations += ScalaNativeBindgen,
-        version in nativeBindgen := BuildInfo.version,
+        nativeBindgen / version := BuildInfo.version,
         nativeBindgenPath := None,
         libraryDependencies ++= {
           (nativeBindgenPath.value, artifactName) match {
             case (None, Some(name)) =>
-              val bindgenVersion = (version in nativeBindgen).value
+              val bindgenVersion = (nativeBindgen / version).value
               val url =
                 s"${BuildInfo.projectUrl}/releases/download/v$bindgenVersion/$name"
 
@@ -91,7 +91,7 @@ object ScalaNativeBindgenPlugin extends AutoPlugin {
             case None =>
               Def.task {
                 val scalaNativeBindgenUpdate =
-                  (update in ScalaNativeBindgen).value
+                  (ScalaNativeBindgen / update).value
 
                 val artifactFile = artifactName match {
                   case None =>
@@ -129,9 +129,9 @@ object ScalaNativeBindgenPlugin extends AutoPlugin {
     inConfig(conf)(
       Def.settings(
         nativeBindings := Seq.empty,
-        target in nativeBindgen := sourceManaged.value / "sbt-scala-native-bindgen",
+        nativeBindgen / target := sourceManaged.value / "sbt-scala-native-bindgen",
         sourceGenerators += Def.taskDyn {
-          val nativeBindgenTarget = (target in nativeBindgen).value.toPath
+          val nativeBindgenTarget = (nativeBindgen / target).value.toPath
           val managedSource       = sourceManaged.value.toPath
 
           if (nativeBindgenTarget.startsWith(managedSource)) {
@@ -143,7 +143,7 @@ object ScalaNativeBindgenPlugin extends AutoPlugin {
         nativeBindgen := {
           val bindgen         = Bindgen(nativeBindgenResolvedPath.value)
           val optionsList     = nativeBindings.value
-          val outputDirectory = (target in nativeBindgen).value
+          val outputDirectory = (nativeBindgen / target).value
           val logger          = streams.value.log
 
           // FIXME: Check uniqueness of names.

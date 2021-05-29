@@ -1,5 +1,6 @@
 #include "IR.h"
 #include "../Utils.h"
+#include <sstream>
 
 IR::IR(std::string libName, std::string linkName, std::string objectName,
        std::string packageName, const LocationManager &locationManager)
@@ -102,15 +103,15 @@ llvm::raw_ostream &operator<<(llvm::raw_ostream &s, const IR &ir) {
         return s;
     }
 
-    s << "import scala.scalanative._\n"
-      << "import scala.scalanative.native._\n\n";
+    s << "import scala.scalanative.unsigned._\n"
+      << "import scala.scalanative.unsafe._\n\n";
 
     if (!ir.functions.empty() || !ir.varDefines.empty() ||
         !ir.variables.empty()) {
         if (!ir.linkName.empty()) {
-            s << "@native.link(\"" << ir.linkName << "\")\n";
+            s << "@link(\"" << ir.linkName << "\")\n";
         }
-        s << "@native.extern\n";
+        s << "@extern\n";
     }
     s << "object " << handleReservedWords(ir.objectName) << " {\n";
 

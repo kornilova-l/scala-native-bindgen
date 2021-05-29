@@ -1,20 +1,20 @@
 package org.scalanative.bindgen.docs
 
-import org.scalatest.FunSpec
+import org.scalatest.funspec.AnyFunSpec
 
-class WordCountSpec extends FunSpec {
+class WordCountSpec extends AnyFunSpec {
   describe("wordcount") {
     it("using generated bindings") {
       //#example
       import org.example.wordcount.WordCount._
-      import scalanative.native._
+      import scala.scalanative.unsafe._
+      import scala.scalanative.libc._
 
       //#example
       val pathToFile =
         c"docs/src/test/resources/scala-native-bindings/wordcount.h"
 
-      import scalanative.posix.unistd.access
-      import scalanative.posix.fcntl.R_OK
+      import scala.scalanative.posix._, unistd.access, unistd.R_OK
       assert(access(pathToFile, R_OK) == 0, "Header file does not exist")
 
       //#example

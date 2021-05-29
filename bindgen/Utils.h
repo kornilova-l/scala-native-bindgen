@@ -1,25 +1,31 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <iostream>
 #include "ir/TypeDef.h"
 #include "ir/types/Type.h"
 #include <clang/AST/AST.h>
 
-inline std::string uint64ToScalaNat(uint64_t v, std::string accumulator = "") {
+inline std::string uint64ToScalaNat(uint64_t v, std::string acc = "") {
     if (v == 0)
-        return accumulator;
+        return acc;
 
-    auto last_digit = v % 10;
-    auto rest = v / 10;
+    auto v_str = std::to_string(v);
+    auto len = v_str.length();
 
-    if (accumulator.empty()) {
-        return uint64ToScalaNat(rest,
-                                "native.Nat._" + std::to_string(last_digit));
+    if (len == 1) {
+        acc = acc + "Nat._" + v_str;
     } else {
-        return uint64ToScalaNat(rest, "native.Nat.Digit[native.Nat._" +
-                                          std::to_string(last_digit) + ", " +
-                                          accumulator + "]");
+        for (char const &c: v_str) {
+            if (acc.empty()) {
+                acc = acc + "Nat.Digit" + std::to_string(len) + "[Nat._" + c;
+            } else {
+                acc = acc + ", Nat._" + c;
+            }
+        }
+        acc = acc + "]";
     }
+    return acc;
 }
 
 static std::array<std::string, 39> reserved_words = {

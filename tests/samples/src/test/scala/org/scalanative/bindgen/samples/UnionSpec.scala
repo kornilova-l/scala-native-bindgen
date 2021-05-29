@@ -1,14 +1,15 @@
 package org.scalanative.bindgen.samples
 
-import org.scalatest.FunSpec
-import scala.scalanative.native._
+import org.scalatest.funspec.AnyFunSpec
+import scala.scalanative.unsafe._
+import scala.scalanative.unsigned._
 
 import org.scalanative.bindgen.samples.Union.implicits._
 
-class UnionSpec extends FunSpec {
+class UnionSpec extends AnyFunSpec {
   describe("union bindings") {
     it("should match size of C memory layout") {
-      assert(Union.union_get_sizeof() == sizeof[Union.union_values])
+      assert(Union.union_get_sizeof().toULong == sizeof[Union.union_values])
     }
 
     it("should provide field getters") {

@@ -1,9 +1,9 @@
 package org.scalanative.bindgen.samples
 
-import org.scalatest.FunSpec
-import scalanative.native._
+import org.scalatest.funspec.AnyFunSpec
+import scala.scalanative.unsafe._
 
-class FunctionSpec extends FunSpec {
+class FunctionSpec extends AnyFunSpec {
   describe("function bindings") {
     it("should bind to function with no args") {
       assert(Function.no_args() == 42)
@@ -19,7 +19,7 @@ class FunctionSpec extends FunSpec {
 
     it("should bind to function with two arg") {
       val result = Function.two_args(3.14.toFloat, 1024)
-      val string = fromCString(result.cast[CString])
+      val string = fromCString(result)
       assert(string == "3.14 1024")
     }
 
@@ -29,8 +29,7 @@ class FunctionSpec extends FunSpec {
 
     it("should bind to function with variadic args") {
       Zone { implicit z =>
-        val result =
-          Function.variadic_args(0.2, toCString("0123"), 1, 10, 100, 1000)
+        val result = Function.variadic_args(0.2, toCString("0123"), 1, 10, 100, 1000)
         assert(result == 3210.2)
       }
     }

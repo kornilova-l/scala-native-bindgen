@@ -1,11 +1,11 @@
 package org.example.app.core
 
-import scala.scalanative._
-import scala.scalanative.native._
+import scala.scalanative.unsigned._
+import scala.scalanative.unsafe._
 
-@native.link("core")
-@native.extern
+@link("core")
+@extern
 object core {
-  def count_words(text: native.CString): native.CInt = native.extern
-  def __not_excluded(): Unit = native.extern
+  def count_words(text: CString): CInt = extern
+  def __not_excluded(): Unit = extern
 }

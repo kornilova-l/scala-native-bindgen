@@ -1,16 +1,16 @@
 package org.scalanative.bindings
 
-import scala.scalanative._
-import scala.scalanative.native._
+import scala.scalanative.unsigned._
+import scala.scalanative.unsafe._
 
-@native.extern
+@extern
 object iconv {
-  type iconv_t = native.Ptr[Byte]
-  def iconv_open(__tocode: native.CString, __fromcode: native.CString): native.Ptr[Byte] = native.extern
-  def iconv(__cd: native.Ptr[Byte], __inbuf: native.Ptr[native.CString], __inbytesleft: native.Ptr[native.CSize], __outbuf: native.Ptr[native.CString], __outbytesleft: native.Ptr[native.CSize]): native.CSize = native.extern
-  def iconv_close(__cd: native.Ptr[Byte]): native.CInt = native.extern
+  type iconv_t = Ptr[Byte]
+  def iconv_open(__tocode: CString, __fromcode: CString): Ptr[Byte] = extern
+  def iconv(__cd: Ptr[Byte], __inbuf: Ptr[CString], __inbytesleft: Ptr[CSize], __outbuf: Ptr[CString], __outbytesleft: Ptr[CSize]): CSize = extern
+  def iconv_close(__cd: Ptr[Byte]): CInt = extern
 
   object defines {
-    val _ICONV_H: native.CInt = 1
+    val _ICONV_H: CInt = 1
   }
 }

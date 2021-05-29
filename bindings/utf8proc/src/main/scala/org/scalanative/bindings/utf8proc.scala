@@ -1,12 +1,12 @@
 package org.scalanative.bindings
 
-import scala.scalanative._
-import scala.scalanative.native._
+import scala.scalanative.unsigned._
+import scala.scalanative.unsafe._, Nat._
 
-@native.link("utf8proc")
-@native.extern
+@link("utf8proc")
+@extern
 object utf8proc {
-  type enum_utf8proc_option_t = native.CUnsignedInt
+  type enum_utf8proc_option_t = CUnsignedInt
   object enum_utf8proc_option_t {
     final val UTF8PROC_NULLTERM: enum_utf8proc_option_t = 1.toUInt
     final val UTF8PROC_STABLE: enum_utf8proc_option_t = 2.toUInt
@@ -25,7 +25,7 @@ object utf8proc {
     final val UTF8PROC_STRIPMARK: enum_utf8proc_option_t = 8192.toUInt
   }
 
-  type enum_utf8proc_category_t = native.CUnsignedInt
+  type enum_utf8proc_category_t = CUnsignedInt
   object enum_utf8proc_category_t {
     final val UTF8PROC_CATEGORY_CN: enum_utf8proc_category_t = 0.toUInt
     final val UTF8PROC_CATEGORY_LU: enum_utf8proc_category_t = 1.toUInt
@@ -59,7 +59,7 @@ object utf8proc {
     final val UTF8PROC_CATEGORY_CO: enum_utf8proc_category_t = 29.toUInt
   }
 
-  type enum_utf8proc_bidi_class_t = native.CUnsignedInt
+  type enum_utf8proc_bidi_class_t = CUnsignedInt
   object enum_utf8proc_bidi_class_t {
     final val UTF8PROC_BIDI_CLASS_L: enum_utf8proc_bidi_class_t = 1.toUInt
     final val UTF8PROC_BIDI_CLASS_LRE: enum_utf8proc_bidi_class_t = 2.toUInt
@@ -86,7 +86,7 @@ object utf8proc {
     final val UTF8PROC_BIDI_CLASS_PDI: enum_utf8proc_bidi_class_t = 23.toUInt
   }
 
-  type enum_utf8proc_decomp_type_t = native.CUnsignedInt
+  type enum_utf8proc_decomp_type_t = CUnsignedInt
   object enum_utf8proc_decomp_type_t {
     final val UTF8PROC_DECOMP_TYPE_FONT: enum_utf8proc_decomp_type_t = 1.toUInt
     final val UTF8PROC_DECOMP_TYPE_NOBREAK: enum_utf8proc_decomp_type_t = 2.toUInt
@@ -106,7 +106,7 @@ object utf8proc {
     final val UTF8PROC_DECOMP_TYPE_COMPAT: enum_utf8proc_decomp_type_t = 16.toUInt
   }
 
-  type enum_utf8proc_boundclass_t = native.CUnsignedInt
+  type enum_utf8proc_boundclass_t = CUnsignedInt
   object enum_utf8proc_boundclass_t {
     final val UTF8PROC_BOUNDCLASS_START: enum_utf8proc_boundclass_t = 0.toUInt
     final val UTF8PROC_BOUNDCLASS_OTHER: enum_utf8proc_boundclass_t = 1.toUInt
@@ -129,65 +129,65 @@ object utf8proc {
     final val UTF8PROC_BOUNDCLASS_E_BASE_GAZ: enum_utf8proc_boundclass_t = 18.toUInt
   }
 
-  type int8_t = native.CSignedChar
-  type int16_t = native.CShort
-  type int32_t = native.CInt
-  type uint8_t = native.CUnsignedChar
-  type uint16_t = native.CUnsignedShort
-  type uint32_t = native.CUnsignedInt
+  type int8_t = CSignedChar
+  type int16_t = CShort
+  type int32_t = CInt
+  type uint8_t = CUnsignedChar
+  type uint16_t = CUnsignedShort
+  type uint32_t = CUnsignedInt
   type utf8proc_int8_t = int8_t
   type utf8proc_uint8_t = uint8_t
   type utf8proc_int16_t = int16_t
   type utf8proc_uint16_t = uint16_t
   type utf8proc_int32_t = int32_t
   type utf8proc_uint32_t = uint32_t
-  type utf8proc_size_t = native.CSize
-  type utf8proc_ssize_t = native.CPtrDiff
-  type utf8proc_bool = native.CBool
+  type utf8proc_size_t = CSize
+  type utf8proc_ssize_t = CPtrDiff
+  type utf8proc_bool = CBool
   type utf8proc_option_t = enum_utf8proc_option_t
   type utf8proc_propval_t = utf8proc_int16_t
-  type struct_utf8proc_property_struct = native.CArray[Byte, native.Nat.Digit[native.Nat._2, native.Nat._4]]
+  type struct_utf8proc_property_struct = CArray[Byte, Digit2[_2, _4]]
   type utf8proc_property_t = struct_utf8proc_property_struct
   type utf8proc_category_t = enum_utf8proc_category_t
   type utf8proc_bidi_class_t = enum_utf8proc_bidi_class_t
   type utf8proc_decomp_type_t = enum_utf8proc_decomp_type_t
   type utf8proc_boundclass_t = enum_utf8proc_boundclass_t
-  type utf8proc_custom_func = native.CFunctionPtr2[utf8proc_int32_t, native.Ptr[Byte], utf8proc_int32_t]
-  val utf8proc_utf8class: native.CArray[utf8proc_int8_t, native.Nat.Digit[native.Nat._2, native.Nat.Digit[native.Nat._5, native.Nat._6]]] = native.extern
-  def utf8proc_version(): native.CString = native.extern
-  def utf8proc_errmsg(errcode: utf8proc_ssize_t): native.CString = native.extern
-  def utf8proc_iterate(str: native.Ptr[utf8proc_uint8_t], strlen: utf8proc_ssize_t, codepoint_ref: native.Ptr[utf8proc_int32_t]): utf8proc_ssize_t = native.extern
-  def utf8proc_codepoint_valid(codepoint: utf8proc_int32_t): utf8proc_bool = native.extern
-  def utf8proc_encode_char(codepoint: utf8proc_int32_t, dst: native.Ptr[utf8proc_uint8_t]): utf8proc_ssize_t = native.extern
-  def utf8proc_get_property(codepoint: utf8proc_int32_t): native.Ptr[utf8proc_property_t] = native.extern
-  def utf8proc_decompose_char(codepoint: utf8proc_int32_t, dst: native.Ptr[utf8proc_int32_t], bufsize: utf8proc_ssize_t, options: utf8proc_option_t, last_boundclass: native.Ptr[native.CInt]): utf8proc_ssize_t = native.extern
-  def utf8proc_decompose(str: native.Ptr[utf8proc_uint8_t], strlen: utf8proc_ssize_t, buffer: native.Ptr[utf8proc_int32_t], bufsize: utf8proc_ssize_t, options: utf8proc_option_t): utf8proc_ssize_t = native.extern
-  def utf8proc_decompose_custom(str: native.Ptr[utf8proc_uint8_t], strlen: utf8proc_ssize_t, buffer: native.Ptr[utf8proc_int32_t], bufsize: utf8proc_ssize_t, options: utf8proc_option_t, custom_func: native.CFunctionPtr2[utf8proc_int32_t, native.Ptr[Byte], utf8proc_int32_t], custom_data: native.Ptr[Byte]): utf8proc_ssize_t = native.extern
-  def utf8proc_normalize_utf32(buffer: native.Ptr[utf8proc_int32_t], length: utf8proc_ssize_t, options: utf8proc_option_t): utf8proc_ssize_t = native.extern
-  def utf8proc_reencode(buffer: native.Ptr[utf8proc_int32_t], length: utf8proc_ssize_t, options: utf8proc_option_t): utf8proc_ssize_t = native.extern
-  def utf8proc_grapheme_break_stateful(codepoint1: utf8proc_int32_t, codepoint2: utf8proc_int32_t, state: native.Ptr[utf8proc_int32_t]): utf8proc_bool = native.extern
-  def utf8proc_grapheme_break(codepoint1: utf8proc_int32_t, codepoint2: utf8proc_int32_t): utf8proc_bool = native.extern
-  def utf8proc_tolower(c: utf8proc_int32_t): utf8proc_int32_t = native.extern
-  def utf8proc_toupper(c: utf8proc_int32_t): utf8proc_int32_t = native.extern
-  def utf8proc_totitle(c: utf8proc_int32_t): utf8proc_int32_t = native.extern
-  def utf8proc_charwidth(codepoint: utf8proc_int32_t): native.CInt = native.extern
-  def utf8proc_category(codepoint: utf8proc_int32_t): utf8proc_category_t = native.extern
-  def utf8proc_category_string(codepoint: utf8proc_int32_t): native.CString = native.extern
-  def utf8proc_map(str: native.Ptr[utf8proc_uint8_t], strlen: utf8proc_ssize_t, dstptr: native.Ptr[native.Ptr[utf8proc_uint8_t]], options: utf8proc_option_t): utf8proc_ssize_t = native.extern
-  def utf8proc_map_custom(str: native.Ptr[utf8proc_uint8_t], strlen: utf8proc_ssize_t, dstptr: native.Ptr[native.Ptr[utf8proc_uint8_t]], options: utf8proc_option_t, custom_func: native.CFunctionPtr2[utf8proc_int32_t, native.Ptr[Byte], utf8proc_int32_t], custom_data: native.Ptr[Byte]): utf8proc_ssize_t = native.extern
-  def utf8proc_NFD(str: native.Ptr[utf8proc_uint8_t]): native.Ptr[utf8proc_uint8_t] = native.extern
-  def utf8proc_NFC(str: native.Ptr[utf8proc_uint8_t]): native.Ptr[utf8proc_uint8_t] = native.extern
-  def utf8proc_NFKD(str: native.Ptr[utf8proc_uint8_t]): native.Ptr[utf8proc_uint8_t] = native.extern
-  def utf8proc_NFKC(str: native.Ptr[utf8proc_uint8_t]): native.Ptr[utf8proc_uint8_t] = native.extern
+  type utf8proc_custom_func = CFuncPtr2[utf8proc_int32_t, Ptr[Byte], utf8proc_int32_t]
+  val utf8proc_utf8class: CArray[utf8proc_int8_t, Digit3[_2, _5, _6]] = extern
+  def utf8proc_version(): CString = extern
+  def utf8proc_errmsg(errcode: utf8proc_ssize_t): CString = extern
+  def utf8proc_iterate(str: Ptr[utf8proc_uint8_t], strlen: utf8proc_ssize_t, codepoint_ref: Ptr[utf8proc_int32_t]): utf8proc_ssize_t = extern
+  def utf8proc_codepoint_valid(codepoint: utf8proc_int32_t): utf8proc_bool = extern
+  def utf8proc_encode_char(codepoint: utf8proc_int32_t, dst: Ptr[utf8proc_uint8_t]): utf8proc_ssize_t = extern
+  def utf8proc_get_property(codepoint: utf8proc_int32_t): Ptr[utf8proc_property_t] = extern
+  def utf8proc_decompose_char(codepoint: utf8proc_int32_t, dst: Ptr[utf8proc_int32_t], bufsize: utf8proc_ssize_t, options: utf8proc_option_t, last_boundclass: Ptr[CInt]): utf8proc_ssize_t = extern
+  def utf8proc_decompose(str: Ptr[utf8proc_uint8_t], strlen: utf8proc_ssize_t, buffer: Ptr[utf8proc_int32_t], bufsize: utf8proc_ssize_t, options: utf8proc_option_t): utf8proc_ssize_t = extern
+  def utf8proc_decompose_custom(str: Ptr[utf8proc_uint8_t], strlen: utf8proc_ssize_t, buffer: Ptr[utf8proc_int32_t], bufsize: utf8proc_ssize_t, options: utf8proc_option_t, custom_func: CFuncPtr2[utf8proc_int32_t, Ptr[Byte], utf8proc_int32_t], custom_data: Ptr[Byte]): utf8proc_ssize_t = extern
+  def utf8proc_normalize_utf32(buffer: Ptr[utf8proc_int32_t], length: utf8proc_ssize_t, options: utf8proc_option_t): utf8proc_ssize_t = extern
+  def utf8proc_reencode(buffer: Ptr[utf8proc_int32_t], length: utf8proc_ssize_t, options: utf8proc_option_t): utf8proc_ssize_t = extern
+  def utf8proc_grapheme_break_stateful(codepoint1: utf8proc_int32_t, codepoint2: utf8proc_int32_t, state: Ptr[utf8proc_int32_t]): utf8proc_bool = extern
+  def utf8proc_grapheme_break(codepoint1: utf8proc_int32_t, codepoint2: utf8proc_int32_t): utf8proc_bool = extern
+  def utf8proc_tolower(c: utf8proc_int32_t): utf8proc_int32_t = extern
+  def utf8proc_toupper(c: utf8proc_int32_t): utf8proc_int32_t = extern
+  def utf8proc_totitle(c: utf8proc_int32_t): utf8proc_int32_t = extern
+  def utf8proc_charwidth(codepoint: utf8proc_int32_t): CInt = extern
+  def utf8proc_category(codepoint: utf8proc_int32_t): utf8proc_category_t = extern
+  def utf8proc_category_string(codepoint: utf8proc_int32_t): CString = extern
+  def utf8proc_map(str: Ptr[utf8proc_uint8_t], strlen: utf8proc_ssize_t, dstptr: Ptr[Ptr[utf8proc_uint8_t]], options: utf8proc_option_t): utf8proc_ssize_t = extern
+  def utf8proc_map_custom(str: Ptr[utf8proc_uint8_t], strlen: utf8proc_ssize_t, dstptr: Ptr[Ptr[utf8proc_uint8_t]], options: utf8proc_option_t, custom_func: CFuncPtr2[utf8proc_int32_t, Ptr[Byte], utf8proc_int32_t], custom_data: Ptr[Byte]): utf8proc_ssize_t = extern
+  def utf8proc_NFD(str: Ptr[utf8proc_uint8_t]): Ptr[utf8proc_uint8_t] = extern
+  def utf8proc_NFC(str: Ptr[utf8proc_uint8_t]): Ptr[utf8proc_uint8_t] = extern
+  def utf8proc_NFKD(str: Ptr[utf8proc_uint8_t]): Ptr[utf8proc_uint8_t] = extern
+  def utf8proc_NFKC(str: Ptr[utf8proc_uint8_t]): Ptr[utf8proc_uint8_t] = extern
 
   object defines {
-    val UTF8PROC_VERSION_MAJOR: native.CInt = 2
-    val UTF8PROC_VERSION_MINOR: native.CInt = 1
-    val UTF8PROC_VERSION_PATCH: native.CInt = 0
-    val UTF8PROC_ERROR_NOMEM: native.CInt = -1
-    val UTF8PROC_ERROR_OVERFLOW: native.CInt = -2
-    val UTF8PROC_ERROR_INVALIDUTF8: native.CInt = -3
-    val UTF8PROC_ERROR_NOTASSIGNED: native.CInt = -4
-    val UTF8PROC_ERROR_INVALIDOPTS: native.CInt = -5
+    val UTF8PROC_VERSION_MAJOR: CInt = 2
+    val UTF8PROC_VERSION_MINOR: CInt = 1
+    val UTF8PROC_VERSION_PATCH: CInt = 0
+    val UTF8PROC_ERROR_NOMEM: CInt = -1
+    val UTF8PROC_ERROR_OVERFLOW: CInt = -2
+    val UTF8PROC_ERROR_INVALIDUTF8: CInt = -3
+    val UTF8PROC_ERROR_NOTASSIGNED: CInt = -4
+    val UTF8PROC_ERROR_INVALIDOPTS: CInt = -5
   }
 }

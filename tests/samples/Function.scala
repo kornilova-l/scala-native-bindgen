@@ -1,39 +1,39 @@
 package org.scalanative.bindgen.samples
 
-import scala.scalanative._
-import scala.scalanative.native._
+import scala.scalanative.unsigned._
+import scala.scalanative.unsafe._
 
-@native.link("bindgentests")
-@native.extern
+@link("bindgentests")
+@extern
 object Function {
-  type struct_s = native.CStruct1[native.CInt]
+  type struct_s = CStruct1[CInt]
   type s = struct_s
-  type union_u = native.CArray[Byte, native.Nat._4]
-  def no_args(): native.CInt = native.extern
-  def void_arg(): native.CFloat = native.extern
-  def one_arg(a: native.CInt): native.CChar = native.extern
-  def two_args(a: native.CFloat, b: native.CInt): native.Ptr[Byte] = native.extern
-  def anonymous_args(p0: native.CFloat, p1: native.CInt): native.CDouble = native.extern
-  def variadic_args(a: native.CDouble, varArgs: native.CString, varArgs0: native.CVararg*): native.CDouble = native.extern
-  def acceptsArray(p0: native.Ptr[native.CInt]): Unit = native.extern
+  type union_u = CArray[Byte, Nat._4]
+  def no_args(): CInt = extern
+  def void_arg(): CFloat = extern
+  def one_arg(a: CInt): CChar = extern
+  def two_args(a: CFloat, b: CInt): Ptr[Byte] = extern
+  def anonymous_args(p0: CFloat, p1: CInt): CDouble = extern
+  def variadic_args(a: CDouble, varArgs: CString, varArgs0: CVarArg*): CDouble = extern
+  def acceptsArray(p0: Ptr[CInt]): Unit = extern
 
   object implicits {
-    implicit class struct_s_ops(val p: native.Ptr[struct_s]) extends AnyVal {
-      def `val`: native.CInt = !p._1
-      def `val_=`(value: native.CInt): Unit = !p._1 = value
+    implicit class struct_s_ops(val p: Ptr[struct_s]) extends AnyVal {
+      def `val`: CInt = p._1
+      def `val_=`(value: CInt): Unit = p._1 = value
     }
 
-    implicit class union_u_pos(val p: native.Ptr[union_u]) extends AnyVal {
-      def a: native.Ptr[native.CInt] = p.cast[native.Ptr[native.CInt]]
-      def a_=(value: native.CInt): Unit = !p.cast[native.Ptr[native.CInt]] = value
+    implicit class union_u_pos(val p: Ptr[union_u]) extends AnyVal {
+      def a: Ptr[CInt] = p.asInstanceOf[Ptr[CInt]]
+      def a_=(value: CInt): Unit = !p.asInstanceOf[Ptr[CInt]] = value
     }
   }
 
   object struct_s {
     import implicits._
-    def apply()(implicit z: native.Zone): native.Ptr[struct_s] = native.alloc[struct_s]
-    def apply(`val`: native.CInt)(implicit z: native.Zone): native.Ptr[struct_s] = {
-      val ptr = native.alloc[struct_s]
+    def apply()(implicit z: Zone): Ptr[struct_s] = alloc[struct_s]
+    def apply(`val`: CInt)(implicit z: Zone): Ptr[struct_s] = {
+      val ptr = alloc[struct_s]
       ptr.`val` = `val`
       ptr
     }

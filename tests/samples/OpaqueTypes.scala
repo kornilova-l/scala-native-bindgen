@@ -1,71 +1,71 @@
 package org.scalanative.bindgen.samples
 
-import scala.scalanative._
-import scala.scalanative.native._
+import scala.scalanative.unsigned._
+import scala.scalanative.unsafe._
 
-@native.link("bindgentests")
-@native.extern
+@link("bindgentests")
+@extern
 object OpaqueTypes {
-  type struct_undefinedIncludedStruct = native.CStruct0 // incomplete type
+  type struct_undefinedIncludedStruct = CStruct0 // incomplete type
   type undefinedIncludedStruct = struct_undefinedIncludedStruct
-  type struct_points = native.CStruct2[native.Ptr[struct_point], native.Ptr[struct_point]]
+  type struct_points = CStruct2[Ptr[struct_point], Ptr[struct_point]]
   type points = struct_points
-  type struct_point = native.CStruct2[native.CInt, native.CInt]
-  type union_u = native.CArray[Byte, native.Nat._4]
+  type struct_point = CStruct2[CInt, CInt]
+  type union_u = CArray[Byte, Nat._4]
   type u = union_u
-  type struct_undefinedStruct = native.CStruct0 // incomplete type
-  type struct_structWithPointerToUndefinedStruct = native.CStruct1[native.Ptr[struct_undefinedStruct]]
-  type union_unionWithPointerToUndefinedStruct = native.CArray[Byte, native.Nat._8]
-  type union_undefinedUnion = native.CStruct0 // incomplete type
+  type struct_undefinedStruct = CStruct0 // incomplete type
+  type struct_structWithPointerToUndefinedStruct = CStruct1[Ptr[struct_undefinedStruct]]
+  type union_unionWithPointerToUndefinedStruct = CArray[Byte, Nat._8]
+  type union_undefinedUnion = CStruct0 // incomplete type
   type undefinedUnion = union_undefinedUnion
-  type aliasToPointerOfUndefinedUnion = native.Ptr[undefinedUnion]
+  type aliasToPointerOfUndefinedUnion = Ptr[undefinedUnion]
   type aliasForUndefinedStruct = struct_undefinedStruct
-  type functionPointerWithPointerToOpaqueType = native.CFunctionPtr1[native.Ptr[native.Ptr[struct_undefinedStruct]], native.Ptr[undefinedUnion]]
-  def move(point: native.Ptr[struct_point], x: native.CInt, y: native.CInt): native.Ptr[struct_point] = native.extern
-  def processPoints(p: native.Ptr[points]): native.Ptr[union_u] = native.extern
-  def usePointerToUndefinedStruct(p0: native.Ptr[struct_undefinedStruct]): Unit = native.extern
-  def fun(): native.Ptr[native.Ptr[undefinedUnion]] = native.extern
-  def returnPointerToAliasOfUndefinedStruct(): native.Ptr[aliasForUndefinedStruct] = native.extern
-  def usePointerToUndefinedIncludedStruct(p0: native.Ptr[undefinedIncludedStruct]): Unit = native.extern
+  type functionPointerWithPointerToOpaqueType = CFuncPtr1[Ptr[Ptr[struct_undefinedStruct]], Ptr[undefinedUnion]]
+  def move(point: Ptr[struct_point], x: CInt, y: CInt): Ptr[struct_point] = extern
+  def processPoints(p: Ptr[points]): Ptr[union_u] = extern
+  def usePointerToUndefinedStruct(p0: Ptr[struct_undefinedStruct]): Unit = extern
+  def fun(): Ptr[Ptr[undefinedUnion]] = extern
+  def returnPointerToAliasOfUndefinedStruct(): Ptr[aliasForUndefinedStruct] = extern
+  def usePointerToUndefinedIncludedStruct(p0: Ptr[undefinedIncludedStruct]): Unit = extern
 
   object implicits {
-    implicit class struct_points_ops(val p: native.Ptr[struct_points]) extends AnyVal {
-      def point1: native.Ptr[struct_point] = !p._1
-      def point1_=(value: native.Ptr[struct_point]): Unit = !p._1 = value
-      def point2: native.Ptr[struct_point] = !p._2
-      def point2_=(value: native.Ptr[struct_point]): Unit = !p._2 = value
+    implicit class struct_points_ops(val p: Ptr[struct_points]) extends AnyVal {
+      def point1: Ptr[struct_point] = p._1
+      def point1_=(value: Ptr[struct_point]): Unit = p._1 = value
+      def point2: Ptr[struct_point] = p._2
+      def point2_=(value: Ptr[struct_point]): Unit = p._2 = value
     }
 
-    implicit class struct_point_ops(val p: native.Ptr[struct_point]) extends AnyVal {
-      def x: native.CInt = !p._1
-      def x_=(value: native.CInt): Unit = !p._1 = value
-      def y: native.CInt = !p._2
-      def y_=(value: native.CInt): Unit = !p._2 = value
+    implicit class struct_point_ops(val p: Ptr[struct_point]) extends AnyVal {
+      def x: CInt = p._1
+      def x_=(value: CInt): Unit = p._1 = value
+      def y: CInt = p._2
+      def y_=(value: CInt): Unit = p._2 = value
     }
 
-    implicit class struct_structWithPointerToUndefinedStruct_ops(val p: native.Ptr[struct_structWithPointerToUndefinedStruct]) extends AnyVal {
-      def field: native.Ptr[struct_undefinedStruct] = !p._1
-      def field_=(value: native.Ptr[struct_undefinedStruct]): Unit = !p._1 = value
+    implicit class struct_structWithPointerToUndefinedStruct_ops(val p: Ptr[struct_structWithPointerToUndefinedStruct]) extends AnyVal {
+      def field: Ptr[struct_undefinedStruct] = p._1
+      def field_=(value: Ptr[struct_undefinedStruct]): Unit = p._1 = value
     }
 
-    implicit class union_u_pos(val p: native.Ptr[union_u]) extends AnyVal {
-      def i: native.Ptr[native.CInt] = p.cast[native.Ptr[native.CInt]]
-      def i_=(value: native.CInt): Unit = !p.cast[native.Ptr[native.CInt]] = value
-      def f: native.Ptr[native.CFloat] = p.cast[native.Ptr[native.CFloat]]
-      def f_=(value: native.CFloat): Unit = !p.cast[native.Ptr[native.CFloat]] = value
+    implicit class union_u_pos(val p: Ptr[union_u]) extends AnyVal {
+      def i: Ptr[CInt] = p.asInstanceOf[Ptr[CInt]]
+      def i_=(value: CInt): Unit = !p.asInstanceOf[Ptr[CInt]] = value
+      def f: Ptr[CFloat] = p.asInstanceOf[Ptr[CFloat]]
+      def f_=(value: CFloat): Unit = !p.asInstanceOf[Ptr[CFloat]] = value
     }
 
-    implicit class union_unionWithPointerToUndefinedStruct_pos(val p: native.Ptr[union_unionWithPointerToUndefinedStruct]) extends AnyVal {
-      def field: native.Ptr[native.Ptr[struct_undefinedStruct]] = p.cast[native.Ptr[native.Ptr[struct_undefinedStruct]]]
-      def field_=(value: native.Ptr[struct_undefinedStruct]): Unit = !p.cast[native.Ptr[native.Ptr[struct_undefinedStruct]]] = value
+    implicit class union_unionWithPointerToUndefinedStruct_pos(val p: Ptr[union_unionWithPointerToUndefinedStruct]) extends AnyVal {
+      def field: Ptr[Ptr[struct_undefinedStruct]] = p.asInstanceOf[Ptr[Ptr[struct_undefinedStruct]]]
+      def field_=(value: Ptr[struct_undefinedStruct]): Unit = !p.asInstanceOf[Ptr[Ptr[struct_undefinedStruct]]] = value
     }
   }
 
   object struct_points {
     import implicits._
-    def apply()(implicit z: native.Zone): native.Ptr[struct_points] = native.alloc[struct_points]
-    def apply(point1: native.Ptr[struct_point], point2: native.Ptr[struct_point])(implicit z: native.Zone): native.Ptr[struct_points] = {
-      val ptr = native.alloc[struct_points]
+    def apply()(implicit z: Zone): Ptr[struct_points] = alloc[struct_points]
+    def apply(point1: Ptr[struct_point], point2: Ptr[struct_point])(implicit z: Zone): Ptr[struct_points] = {
+      val ptr = alloc[struct_points]
       ptr.point1 = point1
       ptr.point2 = point2
       ptr
@@ -74,9 +74,9 @@ object OpaqueTypes {
 
   object struct_point {
     import implicits._
-    def apply()(implicit z: native.Zone): native.Ptr[struct_point] = native.alloc[struct_point]
-    def apply(x: native.CInt, y: native.CInt)(implicit z: native.Zone): native.Ptr[struct_point] = {
-      val ptr = native.alloc[struct_point]
+    def apply()(implicit z: Zone): Ptr[struct_point] = alloc[struct_point]
+    def apply(x: CInt, y: CInt)(implicit z: Zone): Ptr[struct_point] = {
+      val ptr = alloc[struct_point]
       ptr.x = x
       ptr.y = y
       ptr
@@ -85,9 +85,9 @@ object OpaqueTypes {
 
   object struct_structWithPointerToUndefinedStruct {
     import implicits._
-    def apply()(implicit z: native.Zone): native.Ptr[struct_structWithPointerToUndefinedStruct] = native.alloc[struct_structWithPointerToUndefinedStruct]
-    def apply(field: native.Ptr[struct_undefinedStruct])(implicit z: native.Zone): native.Ptr[struct_structWithPointerToUndefinedStruct] = {
-      val ptr = native.alloc[struct_structWithPointerToUndefinedStruct]
+    def apply()(implicit z: Zone): Ptr[struct_structWithPointerToUndefinedStruct] = alloc[struct_structWithPointerToUndefinedStruct]
+    def apply(field: Ptr[struct_undefinedStruct])(implicit z: Zone): Ptr[struct_structWithPointerToUndefinedStruct] = {
+      val ptr = alloc[struct_structWithPointerToUndefinedStruct]
       ptr.field = field
       ptr
     }

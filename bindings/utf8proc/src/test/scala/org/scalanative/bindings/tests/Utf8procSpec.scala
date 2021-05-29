@@ -1,13 +1,15 @@
 package org.scalanative.bindings.tests
 
-import org.scalatest.FunSpec
+import org.scalatest.funspec.AnyFunSpec
 
-class Utf8procSpec extends FunSpec {
+class Utf8procSpec extends AnyFunSpec {
   describe("utf8proc") {
     it("should iterate UTF-8 and count character width") {
       //#usage-example
       import org.scalanative.bindings.utf8proc._
-      import scala.scalanative.native._
+      import scala.scalanative.unsafe._
+      import scala.scalanative.unsigned._
+      import scala.scalanative.libc._
 
       val text    = c"Spørge"
       val textlen = string.strlen(text)
@@ -18,7 +20,7 @@ class Utf8procSpec extends FunSpec {
 
       while (textpos < textlen) {
         val bytes = utf8proc_iterate(
-          text.cast[Ptr[UByte]] + textpos,
+          text.asInstanceOf[Ptr[UByte]] + textpos,
           textlen - textpos,
           codepoint
         )

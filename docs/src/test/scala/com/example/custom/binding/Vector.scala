@@ -1,43 +1,43 @@
 //#example
 package com.example.custom.binding
 
-import scala.scalanative._
-import scala.scalanative.native._
+import scala.scalanative.unsigned._
+import scala.scalanative.unsafe._
 
-@native.link("vector")
-@native.extern
+@link("vector")
+@extern
 object Vector {
-  type Point       = native.CStruct2[native.CFloat, native.CFloat]
-  type LineSegment = native.CStruct2[Point, Point]
+  type Point       = CStruct2[CFloat, CFloat]
+  type LineSegment = CStruct2[Point, Point]
   // ...
   //#example
-  def cosine(v1: native.Ptr[LineSegment],
-             v2: native.Ptr[LineSegment]): native.CFloat = native.extern
+  def cosine(v1: Ptr[LineSegment],
+             v2: Ptr[LineSegment]): CFloat = extern
 
   object implicits {
-    implicit class PointOps(val p: native.Ptr[Point]) extends AnyVal {
-      def x: native.CFloat                = !p._1
-      def x_=(value: native.CFloat): Unit = !p._1 = value
-      def y: native.CFloat                = !p._2
-      def y_=(value: native.CFloat): Unit = !p._2 = value
+    implicit class PointOps(val p: Ptr[Point]) extends AnyVal {
+      def x: CFloat                = p._1
+      def x_=(value: CFloat): Unit = p._1 = value
+      def y: CFloat                = p._2
+      def y_=(value: CFloat): Unit = p._2 = value
     }
 
-    implicit class LineSegmentOps(val p: native.Ptr[LineSegment])
+    implicit class LineSegmentOps(val p: Ptr[LineSegment])
         extends AnyVal {
-      def a: native.Ptr[Point]                = p._1
-      def a_=(value: native.Ptr[Point]): Unit = !p._1 = !value
-      def b: native.Ptr[Point]                = p._2
-      def b_=(value: native.Ptr[Point]): Unit = !p._2 = !value
+      def a: Ptr[Point]                = p._1.asInstanceOf[Ptr[Point]]
+      def a_=(value: Ptr[Point]): Unit = p._1 = value
+      def b: Ptr[Point]                = p._2.asInstanceOf[Ptr[Point]]
+      def b_=(value: Ptr[Point]): Unit = p._2 = value
     }
   }
 
   object Point {
     import implicits._
-    def apply()(implicit z: native.Zone): native.Ptr[Point] =
-      native.alloc[Point]
-    def apply(x: native.CFloat, y: native.CFloat)(
-        implicit z: native.Zone): native.Ptr[Point] = {
-      val ptr = native.alloc[Point]
+    def apply()(implicit z: Zone): Ptr[Point] =
+      alloc[Point]
+    def apply(x: CFloat, y: CFloat)(
+        implicit z: Zone): Ptr[Point] = {
+      val ptr = alloc[Point]
       ptr.x = x
       ptr.y = y
       ptr
@@ -46,11 +46,11 @@ object Vector {
 
   object LineSegment {
     import implicits._
-    def apply()(implicit z: native.Zone): native.Ptr[LineSegment] =
-      native.alloc[LineSegment]
-    def apply(a: native.Ptr[Point], b: native.Ptr[Point])(
-        implicit z: native.Zone): native.Ptr[LineSegment] = {
-      val ptr = native.alloc[LineSegment]
+    def apply()(implicit z: Zone): Ptr[LineSegment] =
+      alloc[LineSegment]
+    def apply(a: Ptr[Point], b: Ptr[Point])(
+        implicit z: Zone): Ptr[LineSegment] = {
+      val ptr = alloc[LineSegment]
       ptr.a = a
       ptr.b = b
       ptr

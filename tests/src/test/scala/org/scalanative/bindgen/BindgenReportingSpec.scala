@@ -2,9 +2,9 @@ package org.scalanative.bindgen
 
 import java.io.{File, PrintWriter}
 
-import org.scalatest.FunSpec
+import org.scalatest.funspec.AnyFunSpec
 
-class BindgenReportingSpec extends FunSpec {
+class BindgenReportingSpec extends AnyFunSpec {
   describe("Bindgen") {
 
     val bindgen = Bindgen(new File(System.getProperty("bindgen.path")))

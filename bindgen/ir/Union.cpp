@@ -23,7 +23,7 @@ Union::generateHelperClass(const LocationManager &locationManager) const {
     std::stringstream s;
     std::string type = replaceChar(getTypeName(), " ", "_");
     s << "    implicit class " << type << "_pos"
-      << "(val p: native.Ptr[" << type << "]) extends AnyVal {\n";
+      << "(val p: Ptr[" << type << "]) extends AnyVal {\n";
     for (const auto &field : fields) {
         if (!field->getName().empty()) {
             s << generateGetter(field, locationManager);
@@ -71,8 +71,8 @@ Union::generateGetter(const std::shared_ptr<Field> &field,
                       const LocationManager &locationManager) const {
     std::string getter = handleReservedWords(field->getName());
     std::string ftype = field->getType()->str(locationManager);
-    return "      def " + getter + ": native.Ptr[" + ftype +
-           "] = p.cast[native.Ptr[" + ftype + "]]\n";
+    return "      def " + getter + ": Ptr[" + ftype +
+           "] = p.asInstanceOf[Ptr[" + ftype + "]]\n";
 }
 
 std::string
@@ -82,9 +82,9 @@ Union::generateSetter(const std::shared_ptr<Field> &field,
     std::string ftype = field->getType()->str(locationManager);
     if (isAliasForType<ArrayType>(field->getType().get()) ||
         isAliasForType<Struct>(field->getType().get())) {
-        return "      def " + setter + "(value: native.Ptr[" + ftype +
-               "]): Unit = !p.cast[native.Ptr[" + ftype + "]] = !value\n";
+        return "      def " + setter + "(value: Ptr[" + ftype +
+               "]): Unit = !p.asInstanceOf[Ptr[" + ftype + "]] = value\n";
     }
     return "      def " + setter + "(value: " + ftype +
-           "): Unit = !p.cast[native.Ptr[" + ftype + "]] = value\n";
+           "): Unit = !p.asInstanceOf[Ptr[" + ftype + "]] = value\n";
 }

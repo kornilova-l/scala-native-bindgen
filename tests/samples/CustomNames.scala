@@ -1,19 +1,19 @@
 package org.scalanative.bindgen.samples
 
-import scala.scalanative._
-import scala.scalanative.native._
+import scala.scalanative.unsigned._
+import scala.scalanative.unsafe._
 
-@native.link("bindgentests")
-@native.extern
+@link("bindgentests")
+@extern
 object CustomNames {
-  type enum_enumWithTypedef = native.CUnsignedInt
+  type enum_enumWithTypedef = CUnsignedInt
   object enum_enumWithTypedef {
     final val CONST: enum_enumWithTypedef = 0.toUInt
   }
 
   type EnumWithTypedef = enum_enumWithTypedef
-  type page = native.CStruct2[native.CString, native.Ptr[Byte]]
-  type book = native.CStruct1[native.Ptr[page]]
-  type weight = native.CArray[Byte, native.Nat._4]
-  type MY_INT = native.CInt
+  type page = CStruct2[CString, Ptr[Byte]]
+  type book = CStruct1[Ptr[page]]
+  type weight = CArray[Byte, Nat._4]
+  type MY_INT = CInt
 }

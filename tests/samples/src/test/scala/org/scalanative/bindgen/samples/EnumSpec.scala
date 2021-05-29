@@ -1,9 +1,9 @@
 package org.scalanative.bindgen.samples
 
-import org.scalatest.FunSpec
-import scalanative.native._
+import org.scalatest.funspec.AnyFunSpec
+import scala.scalanative.unsafe._
 
-class EnumSpec extends FunSpec {
+class EnumSpec extends AnyFunSpec {
   describe("enum bindings") {
     it("should bind to C enum values") {
       assert(Enum.get_WEDNESDAY() == Enum.enum_days.WEDNESDAY)

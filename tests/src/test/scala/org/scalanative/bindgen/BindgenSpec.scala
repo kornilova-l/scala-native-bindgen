@@ -1,10 +1,10 @@
 package org.scalanative.bindgen
 
 import java.io.File
-import org.scalatest.FunSpec
+import org.scalatest.funspec.AnyFunSpec
 import scala.io.Source
 
-class BindgenSpec extends FunSpec {
+class BindgenSpec extends AnyFunSpec {
   describe("Bindgen") {
     val bindgen        = Bindgen(new File(System.getProperty("bindgen.path")))
     val inputDirectory = new File("samples")

@@ -2,3 +2,6 @@ target/
 scripts/.coursier
 scripts/.scalafmt-*
 /scala-native-bindgen-*
+
+.vscode/
+metals.sbt

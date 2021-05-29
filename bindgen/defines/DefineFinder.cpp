@@ -48,7 +48,7 @@ void DefineFinder::MacroDefined(const clang::Token &macroNameTok,
                                 stringToken.getLength());
             ir.addLiteralDefine(
                 macroName, "c" + literal,
-                std::make_shared<PrimitiveType>("native.CString"));
+                std::make_shared<PrimitiveType>("CString"));
         } else if (tokens->size() == 1 &&
                    (*tokens)[0].getKind() == clang::tok::identifier) {
             // token might be a variable
@@ -126,7 +126,7 @@ void DefineFinder::addNumericConstantDefine(const std::string &macroName,
         if (parser.isLongLong) {
             /* literal has `LL` ending. `long long` is represented as `Long`
              * in Scala Native */
-            type = "native.CLongLong";
+            type = "CLongLong";
 
             /* must fit into Scala integer type */
             if (!integerFitsIntoType<long, unsigned long>(parser, positive)) {
@@ -134,7 +134,7 @@ void DefineFinder::addNumericConstantDefine(const std::string &macroName,
             }
         } else if (parser.isLong) {
             /* literal has `L` ending */
-            type = "native.CLong";
+            type = "CLong";
 
             /* must fit into Scala integer type */
             if (!integerFitsIntoType<long, unsigned long>(parser, positive)) {
@@ -146,13 +146,13 @@ void DefineFinder::addNumericConstantDefine(const std::string &macroName,
 
         if (!type.empty()) {
             scalaLiteral = getDecimalLiteral(parser);
-            if (type == "native.CLong" || type == "native.CLongLong") {
+            if (type == "CLong" || type == "CLongLong") {
                 scalaLiteral = scalaLiteral + "L";
             }
         }
     } else if (parser.isFloatingLiteral()) {
         if (fitsIntoDouble(parser)) {
-            type = "native.CDouble";
+            type = "CDouble";
             scalaLiteral = getDoubleLiteral(parser);
         }
     }
@@ -172,9 +172,9 @@ DefineFinder::getTypeOfIntegerLiteral(const clang::NumericLiteralParser &parser,
                                       bool positive) {
 
     if (integerFitsIntoType<int, uint>(parser, positive)) {
-        return "native.CInt";
+        return "CInt";
     } else if (integerFitsIntoType<long, unsigned long>(parser, positive)) {
-        return "native.CLong";
+        return "CLong";
     } else {
         llvm::errs() << "Warning: integer value does not fit into 8 bytes: "
                      << literal << "\n";

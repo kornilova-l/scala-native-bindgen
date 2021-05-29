@@ -4,6 +4,7 @@
 #include "Struct.h"
 #include <fstream>
 #include <stdexcept>
+#include <sstream>
 
 LocationManager::LocationManager(std::string mainHeaderPath)
     : mainHeaderPath(std::move(mainHeaderPath)) {}

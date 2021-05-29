@@ -1,14 +1,14 @@
 package org.scalanative.bindings.posix
 
-import scala.scalanative._
-import scala.scalanative.native._
+import scala.scalanative.unsigned._
+import scala.scalanative.unsafe._
 
-@native.extern
+@extern
 object fnmatch {
-  def fnmatch(__pattern: native.CString, __name: native.CString, __flags: native.CInt): native.CInt = native.extern
+  def fnmatch(__pattern: CString, __name: CString, __flags: CInt): CInt = extern
 
   object defines {
-    val _FNMATCH_H: native.CInt = 1
-    val FNM_NOMATCH: native.CInt = 1
+    val _FNMATCH_H: CInt = 1
+    val FNM_NOMATCH: CInt = 1
   }
 }

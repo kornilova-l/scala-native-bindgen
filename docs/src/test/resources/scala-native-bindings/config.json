@@ -1,8 +1,8 @@
 {
   "stdio.h": {
-    "object": "scala.scalanative.native.stdio"
+    "object": "scala.scalanative.libc.stdio"
   },
   "_stdio.h": {
-    "object": "scala.scalanative.native.stdio"
+    "object": "scala.scalanative.libc.stdio"
   }
 }
